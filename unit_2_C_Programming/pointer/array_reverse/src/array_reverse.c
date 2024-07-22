@@ -14,7 +14,6 @@ int main(void) {
     int arr[5],*ptr;
     int i;
     printf("Input 5 number of elements in array :\n");
-    fflush(stdin);fflush(stdout);
     for(i=0;i<5;i++)
     {
     	printf("element- %d: ",i+1);
@@ -22,7 +21,7 @@ int main(void) {
     	 scanf("%d",&arr[i]);
     }
     ptr=arr+4;
-    printf("The elemnts of array in reverse order :\n");
+    printf("The elements of array in reverse order :\n");
     for(i=4;i>=0;--i)
       {
       	printf("element- %d: %d\n",i+1,*ptr);
