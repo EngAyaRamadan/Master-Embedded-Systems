@@ -2,7 +2,7 @@
  * Student_Managment_System.h
  *
  *  Created on: Dec 9, 2024
- *      Author: QUADRO
+ *      Author: Aya Ramadan
  */
 
 #ifndef STUDENT_MANAGMENT_SYSTEM_H_

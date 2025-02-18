@@ -1,10 +1,8 @@
 /*
  ============================================================================
  Name        : Student_Managment_System.c
- Author      : 
- Version     :
- Copyright   : Your copyright notice
- Description : Hello World in C, Ansi-style
+ Author      : Aya Ramadan
+ Version     :1
  ============================================================================
  */
 

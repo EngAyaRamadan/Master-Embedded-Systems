@@ -3,7 +3,7 @@
  * Student_Managment_System.c
  *
  *  Created on: Dec 9, 2024
- *      Author: QUADRO
+ *      Author: Aya Ramadan
  */
 
 #include <stdio.h>
