@@ -1,0 +1,5 @@
+main.c:29:6:clock_init	4	static
+main.c:35:6:GPIO_init	16	static
+main.c:50:6:wait_ms	24	static
+main.c:58:6:UART_IRQ_callback	8	static
+main.c:78:5:main	32	static
