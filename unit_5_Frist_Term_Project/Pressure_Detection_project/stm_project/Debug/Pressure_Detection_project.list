@@ -1,0 +1,837 @@
+
+Pressure_Detection_project.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .isr_vector   00000130  08000000  08000000  00010000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .text         00000484  08000130  08000130  00010130  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .rodata       00000000  080005b4  080005b4  00020008  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .ARM.extab    00000000  080005b4  080005b4  00020008  2**0
+                  CONTENTS
+  4 .ARM          00000000  080005b4  080005b4  00020008  2**0
+                  CONTENTS
+  5 .preinit_array 00000000  080005b4  080005b4  00020008  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  6 .init_array   00000004  080005b4  080005b4  000105b4  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  7 .fini_array   00000004  080005b8  080005b8  000105b8  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  8 .data         00000008  20000000  080005bc  00020000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  9 .bss          00000048  20000008  080005c4  00020008  2**2
+                  ALLOC
+ 10 ._user_heap_stack 00000600  20000050  080005c4  00020050  2**0
+                  ALLOC
+ 11 .ARM.attributes 00000029  00000000  00000000  00020008  2**0
+                  CONTENTS, READONLY
+ 12 .debug_info   0000385f  00000000  00000000  00020031  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_abbrev 00000b71  00000000  00000000  00023890  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 14 .debug_aranges 00000168  00000000  00000000  00024408  2**3
+                  CONTENTS, READONLY, DEBUGGING
+ 15 .debug_ranges 00000100  00000000  00000000  00024570  2**3
+                  CONTENTS, READONLY, DEBUGGING
+ 16 .debug_macro  0000286c  00000000  00000000  00024670  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 17 .debug_line   0000242c  00000000  00000000  00026edc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 18 .debug_str    000084db  00000000  00000000  00029308  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 19 .comment      0000007b  00000000  00000000  000317e3  2**0
+                  CONTENTS, READONLY
+ 20 .debug_frame  00000338  00000000  00000000  00031860  2**2
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+08000130 <__do_global_dtors_aux>:
+ 8000130:	b510      	push	{r4, lr}
+ 8000132:	4c05      	ldr	r4, [pc, #20]	; (8000148 <__do_global_dtors_aux+0x18>)
+ 8000134:	7823      	ldrb	r3, [r4, #0]
+ 8000136:	b933      	cbnz	r3, 8000146 <__do_global_dtors_aux+0x16>
+ 8000138:	4b04      	ldr	r3, [pc, #16]	; (800014c <__do_global_dtors_aux+0x1c>)
+ 800013a:	b113      	cbz	r3, 8000142 <__do_global_dtors_aux+0x12>
+ 800013c:	4804      	ldr	r0, [pc, #16]	; (8000150 <__do_global_dtors_aux+0x20>)
+ 800013e:	f3af 8000 	nop.w
+ 8000142:	2301      	movs	r3, #1
+ 8000144:	7023      	strb	r3, [r4, #0]
+ 8000146:	bd10      	pop	{r4, pc}
+ 8000148:	20000008 	.word	0x20000008
+ 800014c:	00000000 	.word	0x00000000
+ 8000150:	0800059c 	.word	0x0800059c
+
+08000154 <frame_dummy>:
+ 8000154:	b508      	push	{r3, lr}
+ 8000156:	4b03      	ldr	r3, [pc, #12]	; (8000164 <frame_dummy+0x10>)
+ 8000158:	b11b      	cbz	r3, 8000162 <frame_dummy+0xe>
+ 800015a:	4903      	ldr	r1, [pc, #12]	; (8000168 <frame_dummy+0x14>)
+ 800015c:	4803      	ldr	r0, [pc, #12]	; (800016c <frame_dummy+0x18>)
+ 800015e:	f3af 8000 	nop.w
+ 8000162:	bd08      	pop	{r3, pc}
+ 8000164:	00000000 	.word	0x00000000
+ 8000168:	2000000c 	.word	0x2000000c
+ 800016c:	0800059c 	.word	0x0800059c
+
+08000170 <Monitor_Alarm_init>:
+int Alarm_Period=60;
+ 
+ void (*Monitor_Alarm_state) ();
+ 
+ void Monitor_Alarm_init()
+ {
+ 8000170:	b480      	push	{r7}
+ 8000172:	af00      	add	r7, sp, #0
+	// printf("Monitor_Alarm_init\n");
+ }
+ 8000174:	bf00      	nop
+ 8000176:	46bd      	mov	sp, r7
+ 8000178:	bc80      	pop	{r7}
+ 800017a:	4770      	bx	lr
+
+0800017c <High_Pressure_Detected>:
+ void High_Pressure_Detected()
+ {
+ 800017c:	b480      	push	{r7}
+ 800017e:	af00      	add	r7, sp, #0
+	 Monitor_Alarm_state= STATE(Monitor_Alarm_AlarmON);
+ 8000180:	4b03      	ldr	r3, [pc, #12]	; (8000190 <High_Pressure_Detected+0x14>)
+ 8000182:	4a04      	ldr	r2, [pc, #16]	; (8000194 <High_Pressure_Detected+0x18>)
+ 8000184:	601a      	str	r2, [r3, #0]
+ }
+ 8000186:	bf00      	nop
+ 8000188:	46bd      	mov	sp, r7
+ 800018a:	bc80      	pop	{r7}
+ 800018c:	4770      	bx	lr
+ 800018e:	bf00      	nop
+ 8000190:	20000034 	.word	0x20000034
+ 8000194:	080001b1 	.word	0x080001b1
+
+08000198 <ST_Monitor_Alarm_AlarmOFF>:
+ 
+ STATE_DEFINE(Monitor_Alarm_AlarmOFF)
+{
+ 8000198:	b580      	push	{r7, lr}
+ 800019a:	af00      	add	r7, sp, #0
+   Monitor_Alarm_state_id=Monitor_Alarm_AlarmOFF;
+ 800019c:	4b03      	ldr	r3, [pc, #12]	; (80001ac <ST_Monitor_Alarm_AlarmOFF+0x14>)
+ 800019e:	2200      	movs	r2, #0
+ 80001a0:	701a      	strb	r2, [r3, #0]
+	Stop_Alarm();
+ 80001a2:	f000 f845 	bl	8000230 <Stop_Alarm>
+}
+ 80001a6:	bf00      	nop
+ 80001a8:	4618      	mov	r0, r3
+ 80001aa:	bd80      	pop	{r7, pc}
+ 80001ac:	20000038 	.word	0x20000038
+
+080001b0 <ST_Monitor_Alarm_AlarmON>:
+ STATE_DEFINE(Monitor_Alarm_AlarmON)
+{
+ 80001b0:	b580      	push	{r7, lr}
+ 80001b2:	af00      	add	r7, sp, #0
+  Monitor_Alarm_state_id=Monitor_Alarm_AlarmON;
+ 80001b4:	4b08      	ldr	r3, [pc, #32]	; (80001d8 <ST_Monitor_Alarm_AlarmON+0x28>)
+ 80001b6:	2201      	movs	r2, #1
+ 80001b8:	701a      	strb	r2, [r3, #0]
+  Start_Alarm();
+ 80001ba:	f000 f847 	bl	800024c <Start_Alarm>
+  Alarm_timer=Alarm_Period;
+ 80001be:	4b07      	ldr	r3, [pc, #28]	; (80001dc <ST_Monitor_Alarm_AlarmON+0x2c>)
+ 80001c0:	681b      	ldr	r3, [r3, #0]
+ 80001c2:	4a07      	ldr	r2, [pc, #28]	; (80001e0 <ST_Monitor_Alarm_AlarmON+0x30>)
+ 80001c4:	6013      	str	r3, [r2, #0]
+  Monitor_Alarm_state= STATE(Monitor_Alarm_waiting);
+ 80001c6:	4b07      	ldr	r3, [pc, #28]	; (80001e4 <ST_Monitor_Alarm_AlarmON+0x34>)
+ 80001c8:	4a07      	ldr	r2, [pc, #28]	; (80001e8 <ST_Monitor_Alarm_AlarmON+0x38>)
+ 80001ca:	601a      	str	r2, [r3, #0]
+  Monitor_Alarm_state();
+ 80001cc:	4b05      	ldr	r3, [pc, #20]	; (80001e4 <ST_Monitor_Alarm_AlarmON+0x34>)
+ 80001ce:	681b      	ldr	r3, [r3, #0]
+ 80001d0:	4798      	blx	r3
+}
+ 80001d2:	bf00      	nop
+ 80001d4:	4618      	mov	r0, r3
+ 80001d6:	bd80      	pop	{r7, pc}
+ 80001d8:	20000038 	.word	0x20000038
+ 80001dc:	20000000 	.word	0x20000000
+ 80001e0:	20000024 	.word	0x20000024
+ 80001e4:	20000034 	.word	0x20000034
+ 80001e8:	080001ed 	.word	0x080001ed
+
+080001ec <ST_Monitor_Alarm_waiting>:
+ STATE_DEFINE(Monitor_Alarm_waiting)
+{
+ 80001ec:	b580      	push	{r7, lr}
+ 80001ee:	af00      	add	r7, sp, #0
+    Monitor_Alarm_state_id=Monitor_Alarm_waiting;
+ 80001f0:	4b08      	ldr	r3, [pc, #32]	; (8000214 <ST_Monitor_Alarm_waiting+0x28>)
+ 80001f2:	2202      	movs	r2, #2
+ 80001f4:	701a      	strb	r2, [r3, #0]
+    Delay(Alarm_timer);
+ 80001f6:	4b08      	ldr	r3, [pc, #32]	; (8000218 <ST_Monitor_Alarm_waiting+0x2c>)
+ 80001f8:	681b      	ldr	r3, [r3, #0]
+ 80001fa:	4618      	mov	r0, r3
+ 80001fc:	f000 f8ac 	bl	8000358 <Delay>
+    Alarm_timer=0;
+ 8000200:	4b05      	ldr	r3, [pc, #20]	; (8000218 <ST_Monitor_Alarm_waiting+0x2c>)
+ 8000202:	2200      	movs	r2, #0
+ 8000204:	601a      	str	r2, [r3, #0]
+	Monitor_Alarm_state= STATE(Monitor_Alarm_AlarmOFF);
+ 8000206:	4b05      	ldr	r3, [pc, #20]	; (800021c <ST_Monitor_Alarm_waiting+0x30>)
+ 8000208:	4a05      	ldr	r2, [pc, #20]	; (8000220 <ST_Monitor_Alarm_waiting+0x34>)
+ 800020a:	601a      	str	r2, [r3, #0]
+
+}
+ 800020c:	bf00      	nop
+ 800020e:	4618      	mov	r0, r3
+ 8000210:	bd80      	pop	{r7, pc}
+ 8000212:	bf00      	nop
+ 8000214:	20000038 	.word	0x20000038
+ 8000218:	20000024 	.word	0x20000024
+ 800021c:	20000034 	.word	0x20000034
+ 8000220:	08000199 	.word	0x08000199
+
+08000224 <Monitor_Alarm_Driver_init>:
+#include "Monitor_Alarm_driver.h"
+
+
+void (*Monitor_Alarm_Driver_state) ();
+void Monitor_Alarm_Driver_init()
+{
+ 8000224:	b480      	push	{r7}
+ 8000226:	af00      	add	r7, sp, #0
+	//printf("Monitor_Alarm_init\n");
+}
+ 8000228:	bf00      	nop
+ 800022a:	46bd      	mov	sp, r7
+ 800022c:	bc80      	pop	{r7}
+ 800022e:	4770      	bx	lr
+
+08000230 <Stop_Alarm>:
+
+void Stop_Alarm()
+{
+ 8000230:	b480      	push	{r7}
+ 8000232:	af00      	add	r7, sp, #0
+	Monitor_Alarm_Driver_state=STATE(Monitor_Alarm_Driver_AlarmOFF);
+ 8000234:	4b03      	ldr	r3, [pc, #12]	; (8000244 <Stop_Alarm+0x14>)
+ 8000236:	4a04      	ldr	r2, [pc, #16]	; (8000248 <Stop_Alarm+0x18>)
+ 8000238:	601a      	str	r2, [r3, #0]
+}
+ 800023a:	bf00      	nop
+ 800023c:	46bd      	mov	sp, r7
+ 800023e:	bc80      	pop	{r7}
+ 8000240:	4770      	bx	lr
+ 8000242:	bf00      	nop
+ 8000244:	20000040 	.word	0x20000040
+ 8000248:	080002b5 	.word	0x080002b5
+
+0800024c <Start_Alarm>:
+void Start_Alarm()
+{
+ 800024c:	b480      	push	{r7}
+ 800024e:	af00      	add	r7, sp, #0
+	Monitor_Alarm_Driver_state=STATE(Monitor_Alarm_Driver_AlarmON);
+ 8000250:	4b03      	ldr	r3, [pc, #12]	; (8000260 <Start_Alarm+0x14>)
+ 8000252:	4a04      	ldr	r2, [pc, #16]	; (8000264 <Start_Alarm+0x18>)
+ 8000254:	601a      	str	r2, [r3, #0]
+	
+}
+ 8000256:	bf00      	nop
+ 8000258:	46bd      	mov	sp, r7
+ 800025a:	bc80      	pop	{r7}
+ 800025c:	4770      	bx	lr
+ 800025e:	bf00      	nop
+ 8000260:	20000040 	.word	0x20000040
+ 8000264:	08000281 	.word	0x08000281
+
+08000268 <ST_Monitor_Alarm_Driver_waiting>:
+STATE_DEFINE(Monitor_Alarm_Driver_waiting)
+{
+ 8000268:	b480      	push	{r7}
+ 800026a:	af00      	add	r7, sp, #0
+	Monitor_Alarm_Driver_state_id=Monitor_Alarm_Driver_waiting;
+ 800026c:	4b03      	ldr	r3, [pc, #12]	; (800027c <ST_Monitor_Alarm_Driver_waiting+0x14>)
+ 800026e:	2200      	movs	r2, #0
+ 8000270:	701a      	strb	r2, [r3, #0]
+	
+}
+ 8000272:	bf00      	nop
+ 8000274:	4618      	mov	r0, r3
+ 8000276:	46bd      	mov	sp, r7
+ 8000278:	bc80      	pop	{r7}
+ 800027a:	4770      	bx	lr
+ 800027c:	2000003c 	.word	0x2000003c
+
+08000280 <ST_Monitor_Alarm_Driver_AlarmON>:
+STATE_DEFINE(Monitor_Alarm_Driver_AlarmON)
+{
+ 8000280:	b580      	push	{r7, lr}
+ 8000282:	af00      	add	r7, sp, #0
+	Monitor_Alarm_Driver_state_id=Monitor_Alarm_Driver_AlarmON;
+ 8000284:	4b08      	ldr	r3, [pc, #32]	; (80002a8 <ST_Monitor_Alarm_Driver_AlarmON+0x28>)
+ 8000286:	2201      	movs	r2, #1
+ 8000288:	701a      	strb	r2, [r3, #0]
+	Set_Alarm_actuator(1);
+ 800028a:	2001      	movs	r0, #1
+ 800028c:	f000 f880 	bl	8000390 <Set_Alarm_actuator>
+	Delay(60);
+ 8000290:	203c      	movs	r0, #60	; 0x3c
+ 8000292:	f000 f861 	bl	8000358 <Delay>
+	Set_Alarm_actuator(0);
+ 8000296:	2000      	movs	r0, #0
+ 8000298:	f000 f87a 	bl	8000390 <Set_Alarm_actuator>
+	Monitor_Alarm_Driver_state=STATE(Monitor_Alarm_Driver_waiting);
+ 800029c:	4b03      	ldr	r3, [pc, #12]	; (80002ac <ST_Monitor_Alarm_Driver_AlarmON+0x2c>)
+ 800029e:	4a04      	ldr	r2, [pc, #16]	; (80002b0 <ST_Monitor_Alarm_Driver_AlarmON+0x30>)
+ 80002a0:	601a      	str	r2, [r3, #0]
+}
+ 80002a2:	bf00      	nop
+ 80002a4:	4618      	mov	r0, r3
+ 80002a6:	bd80      	pop	{r7, pc}
+ 80002a8:	2000003c 	.word	0x2000003c
+ 80002ac:	20000040 	.word	0x20000040
+ 80002b0:	08000269 	.word	0x08000269
+
+080002b4 <ST_Monitor_Alarm_Driver_AlarmOFF>:
+STATE_DEFINE(Monitor_Alarm_Driver_AlarmOFF)
+{
+ 80002b4:	b580      	push	{r7, lr}
+ 80002b6:	af00      	add	r7, sp, #0
+	Monitor_Alarm_Driver_state_id=Monitor_Alarm_Driver_AlarmOFF;
+ 80002b8:	4b05      	ldr	r3, [pc, #20]	; (80002d0 <ST_Monitor_Alarm_Driver_AlarmOFF+0x1c>)
+ 80002ba:	2202      	movs	r2, #2
+ 80002bc:	701a      	strb	r2, [r3, #0]
+	Set_Alarm_actuator(0);
+ 80002be:	2000      	movs	r0, #0
+ 80002c0:	f000 f866 	bl	8000390 <Set_Alarm_actuator>
+	Monitor_Alarm_Driver_state=STATE(Monitor_Alarm_Driver_waiting);
+ 80002c4:	4b03      	ldr	r3, [pc, #12]	; (80002d4 <ST_Monitor_Alarm_Driver_AlarmOFF+0x20>)
+ 80002c6:	4a04      	ldr	r2, [pc, #16]	; (80002d8 <ST_Monitor_Alarm_Driver_AlarmOFF+0x24>)
+ 80002c8:	601a      	str	r2, [r3, #0]
+	
+}
+ 80002ca:	bf00      	nop
+ 80002cc:	4618      	mov	r0, r3
+ 80002ce:	bd80      	pop	{r7, pc}
+ 80002d0:	2000003c 	.word	0x2000003c
+ 80002d4:	20000040 	.word	0x20000040
+ 80002d8:	08000269 	.word	0x08000269
+
+080002dc <Pressure_sensor_init>:
+
+/* STATE pointer to function */
+void (*Pressure_sensor_state)  ();
+
+void Pressure_sensor_init()
+{
+ 80002dc:	b480      	push	{r7}
+ 80002de:	af00      	add	r7, sp, #0
+	//printf("Pressure_sensor_init\n");
+}
+ 80002e0:	bf00      	nop
+ 80002e2:	46bd      	mov	sp, r7
+ 80002e4:	bc80      	pop	{r7}
+ 80002e6:	4770      	bx	lr
+
+080002e8 <ST_Pressure_sensor_readflag>:
+STATE_DEFINE(Pressure_sensor_readflag)
+{
+ 80002e8:	b580      	push	{r7, lr}
+ 80002ea:	af00      	add	r7, sp, #0
+		/* state name */
+	Pressure_sensor_state_id=Pressure_sensor_readflag;
+ 80002ec:	4b0a      	ldr	r3, [pc, #40]	; (8000318 <ST_Pressure_sensor_readflag+0x30>)
+ 80002ee:	2200      	movs	r2, #0
+ 80002f0:	701a      	strb	r2, [r3, #0]
+	/* state action */
+	Pressure_sensor_Pval=getPressureVal();
+ 80002f2:	f000 f841 	bl	8000378 <getPressureVal>
+ 80002f6:	4602      	mov	r2, r0
+ 80002f8:	4b08      	ldr	r3, [pc, #32]	; (800031c <ST_Pressure_sensor_readflag+0x34>)
+ 80002fa:	601a      	str	r2, [r3, #0]
+		/* Event check */
+	//printf("Pressure_sensor_readflag state: value=%d \n",Pressure_sensor_Pval);
+	Pressure_sensor_set_val(Pressure_sensor_Pval);
+ 80002fc:	4b07      	ldr	r3, [pc, #28]	; (800031c <ST_Pressure_sensor_readflag+0x34>)
+ 80002fe:	681b      	ldr	r3, [r3, #0]
+ 8000300:	4618      	mov	r0, r3
+ 8000302:	f000 f8d1 	bl	80004a8 <Pressure_sensor_set_val>
+	Pressure_time=100;
+ 8000306:	4b06      	ldr	r3, [pc, #24]	; (8000320 <ST_Pressure_sensor_readflag+0x38>)
+ 8000308:	2264      	movs	r2, #100	; 0x64
+ 800030a:	601a      	str	r2, [r3, #0]
+	Pressure_sensor_state=STATE(Pressure_sensor_waiting);
+ 800030c:	4b05      	ldr	r3, [pc, #20]	; (8000324 <ST_Pressure_sensor_readflag+0x3c>)
+ 800030e:	4a06      	ldr	r2, [pc, #24]	; (8000328 <ST_Pressure_sensor_readflag+0x40>)
+ 8000310:	601a      	str	r2, [r3, #0]
+}
+ 8000312:	bf00      	nop
+ 8000314:	4618      	mov	r0, r3
+ 8000316:	bd80      	pop	{r7, pc}
+ 8000318:	20000048 	.word	0x20000048
+ 800031c:	20000028 	.word	0x20000028
+ 8000320:	2000002c 	.word	0x2000002c
+ 8000324:	20000044 	.word	0x20000044
+ 8000328:	0800032d 	.word	0x0800032d
+
+0800032c <ST_Pressure_sensor_waiting>:
+STATE_DEFINE(Pressure_sensor_waiting)
+{
+ 800032c:	b580      	push	{r7, lr}
+ 800032e:	af00      	add	r7, sp, #0
+		/* state name */
+	//Pressure_sensor_state_id=Pressure_sensor_waiting;
+	Delay(Pressure_time);
+ 8000330:	4b06      	ldr	r3, [pc, #24]	; (800034c <ST_Pressure_sensor_waiting+0x20>)
+ 8000332:	681b      	ldr	r3, [r3, #0]
+ 8000334:	4618      	mov	r0, r3
+ 8000336:	f000 f80f 	bl	8000358 <Delay>
+	Pressure_time=0;
+ 800033a:	4b04      	ldr	r3, [pc, #16]	; (800034c <ST_Pressure_sensor_waiting+0x20>)
+ 800033c:	2200      	movs	r2, #0
+ 800033e:	601a      	str	r2, [r3, #0]
+	Pressure_sensor_state=STATE(Pressure_sensor_readflag);
+ 8000340:	4b03      	ldr	r3, [pc, #12]	; (8000350 <ST_Pressure_sensor_waiting+0x24>)
+ 8000342:	4a04      	ldr	r2, [pc, #16]	; (8000354 <ST_Pressure_sensor_waiting+0x28>)
+ 8000344:	601a      	str	r2, [r3, #0]
+}
+ 8000346:	bf00      	nop
+ 8000348:	4618      	mov	r0, r3
+ 800034a:	bd80      	pop	{r7, pc}
+ 800034c:	2000002c 	.word	0x2000002c
+ 8000350:	20000044 	.word	0x20000044
+ 8000354:	080002e9 	.word	0x080002e9
+
+08000358 <Delay>:
+#include "driver.h"
+#include <stdint.h>
+#include <stdio.h>
+void Delay(int nCount)
+{
+ 8000358:	b480      	push	{r7}
+ 800035a:	b083      	sub	sp, #12
+ 800035c:	af00      	add	r7, sp, #0
+ 800035e:	6078      	str	r0, [r7, #4]
+	for(; nCount != 0; nCount--);
+ 8000360:	e002      	b.n	8000368 <Delay+0x10>
+ 8000362:	687b      	ldr	r3, [r7, #4]
+ 8000364:	3b01      	subs	r3, #1
+ 8000366:	607b      	str	r3, [r7, #4]
+ 8000368:	687b      	ldr	r3, [r7, #4]
+ 800036a:	2b00      	cmp	r3, #0
+ 800036c:	d1f9      	bne.n	8000362 <Delay+0xa>
+}
+ 800036e:	bf00      	nop
+ 8000370:	370c      	adds	r7, #12
+ 8000372:	46bd      	mov	sp, r7
+ 8000374:	bc80      	pop	{r7}
+ 8000376:	4770      	bx	lr
+
+08000378 <getPressureVal>:
+
+int getPressureVal(){
+ 8000378:	b480      	push	{r7}
+ 800037a:	af00      	add	r7, sp, #0
+
+	return (GPIOA_IDR & 0xFF);
+ 800037c:	4b03      	ldr	r3, [pc, #12]	; (800038c <getPressureVal+0x14>)
+ 800037e:	681b      	ldr	r3, [r3, #0]
+ 8000380:	b2db      	uxtb	r3, r3
+}
+ 8000382:	4618      	mov	r0, r3
+ 8000384:	46bd      	mov	sp, r7
+ 8000386:	bc80      	pop	{r7}
+ 8000388:	4770      	bx	lr
+ 800038a:	bf00      	nop
+ 800038c:	40010808 	.word	0x40010808
+
+08000390 <Set_Alarm_actuator>:
+
+void Set_Alarm_actuator(int i){
+ 8000390:	b580      	push	{r7, lr}
+ 8000392:	b082      	sub	sp, #8
+ 8000394:	af00      	add	r7, sp, #0
+ 8000396:	6078      	str	r0, [r7, #4]
+	if (i == 1){
+ 8000398:	687b      	ldr	r3, [r7, #4]
+ 800039a:	2b01      	cmp	r3, #1
+ 800039c:	d10a      	bne.n	80003b4 <Set_Alarm_actuator+0x24>
+		SET_BIT(GPIOA_ODR,13);
+ 800039e:	4b0c      	ldr	r3, [pc, #48]	; (80003d0 <Set_Alarm_actuator+0x40>)
+ 80003a0:	681b      	ldr	r3, [r3, #0]
+ 80003a2:	4a0b      	ldr	r2, [pc, #44]	; (80003d0 <Set_Alarm_actuator+0x40>)
+ 80003a4:	f443 5300 	orr.w	r3, r3, #8192	; 0x2000
+ 80003a8:	6013      	str	r3, [r2, #0]
+		Delay(10000);
+ 80003aa:	f242 7010 	movw	r0, #10000	; 0x2710
+ 80003ae:	f7ff ffd3 	bl	8000358 <Delay>
+	}
+	else if (i == 0){
+		RESET_BIT(GPIOA_ODR,13);
+
+	}
+}
+ 80003b2:	e008      	b.n	80003c6 <Set_Alarm_actuator+0x36>
+	else if (i == 0){
+ 80003b4:	687b      	ldr	r3, [r7, #4]
+ 80003b6:	2b00      	cmp	r3, #0
+ 80003b8:	d105      	bne.n	80003c6 <Set_Alarm_actuator+0x36>
+		RESET_BIT(GPIOA_ODR,13);
+ 80003ba:	4b05      	ldr	r3, [pc, #20]	; (80003d0 <Set_Alarm_actuator+0x40>)
+ 80003bc:	681b      	ldr	r3, [r3, #0]
+ 80003be:	4a04      	ldr	r2, [pc, #16]	; (80003d0 <Set_Alarm_actuator+0x40>)
+ 80003c0:	f423 5300 	bic.w	r3, r3, #8192	; 0x2000
+ 80003c4:	6013      	str	r3, [r2, #0]
+}
+ 80003c6:	bf00      	nop
+ 80003c8:	3708      	adds	r7, #8
+ 80003ca:	46bd      	mov	sp, r7
+ 80003cc:	bd80      	pop	{r7, pc}
+ 80003ce:	bf00      	nop
+ 80003d0:	4001080c 	.word	0x4001080c
+
+080003d4 <GPIO_INITIALIZATION>:
+
+void GPIO_INITIALIZATION (){
+ 80003d4:	b480      	push	{r7}
+ 80003d6:	af00      	add	r7, sp, #0
+	SET_BIT(APB2ENR, 2);
+ 80003d8:	4b0f      	ldr	r3, [pc, #60]	; (8000418 <GPIO_INITIALIZATION+0x44>)
+ 80003da:	681b      	ldr	r3, [r3, #0]
+ 80003dc:	4a0e      	ldr	r2, [pc, #56]	; (8000418 <GPIO_INITIALIZATION+0x44>)
+ 80003de:	f043 0304 	orr.w	r3, r3, #4
+ 80003e2:	6013      	str	r3, [r2, #0]
+	GPIOA_CRL &= 0xFF0FFFFF;
+ 80003e4:	4b0d      	ldr	r3, [pc, #52]	; (800041c <GPIO_INITIALIZATION+0x48>)
+ 80003e6:	681b      	ldr	r3, [r3, #0]
+ 80003e8:	4a0c      	ldr	r2, [pc, #48]	; (800041c <GPIO_INITIALIZATION+0x48>)
+ 80003ea:	f423 0370 	bic.w	r3, r3, #15728640	; 0xf00000
+ 80003ee:	6013      	str	r3, [r2, #0]
+	GPIOA_CRL |= 0x00000000;
+ 80003f0:	4b0a      	ldr	r3, [pc, #40]	; (800041c <GPIO_INITIALIZATION+0x48>)
+ 80003f2:	4a0a      	ldr	r2, [pc, #40]	; (800041c <GPIO_INITIALIZATION+0x48>)
+ 80003f4:	681b      	ldr	r3, [r3, #0]
+ 80003f6:	6013      	str	r3, [r2, #0]
+	GPIOA_CRH &= 0xFF0FFFFF;
+ 80003f8:	4b09      	ldr	r3, [pc, #36]	; (8000420 <GPIO_INITIALIZATION+0x4c>)
+ 80003fa:	681b      	ldr	r3, [r3, #0]
+ 80003fc:	4a08      	ldr	r2, [pc, #32]	; (8000420 <GPIO_INITIALIZATION+0x4c>)
+ 80003fe:	f423 0370 	bic.w	r3, r3, #15728640	; 0xf00000
+ 8000402:	6013      	str	r3, [r2, #0]
+	GPIOA_CRH |= 0x22222222;
+ 8000404:	4b06      	ldr	r3, [pc, #24]	; (8000420 <GPIO_INITIALIZATION+0x4c>)
+ 8000406:	681b      	ldr	r3, [r3, #0]
+ 8000408:	4a05      	ldr	r2, [pc, #20]	; (8000420 <GPIO_INITIALIZATION+0x4c>)
+ 800040a:	f043 3322 	orr.w	r3, r3, #572662306	; 0x22222222
+ 800040e:	6013      	str	r3, [r2, #0]
+}
+ 8000410:	bf00      	nop
+ 8000412:	46bd      	mov	sp, r7
+ 8000414:	bc80      	pop	{r7}
+ 8000416:	4770      	bx	lr
+ 8000418:	40021018 	.word	0x40021018
+ 800041c:	40010800 	.word	0x40010800
+ 8000420:	40010804 	.word	0x40010804
+
+08000424 <setup>:
+#include"mainAlgorithm.h"
+#include"Monitor_Alarm.h"
+#include"Monitor_Alarm_driver.h"
+
+void setup()
+{
+ 8000424:	b580      	push	{r7, lr}
+ 8000426:	af00      	add	r7, sp, #0
+//	init all the drivers
+//	init IRQ
+//	init Hall US_Driver DC_Driver
+//	init clock
+	 Pressure_sensor_init();
+ 8000428:	f7ff ff58 	bl	80002dc <Pressure_sensor_init>
+	 Monitor_Alarm_init();
+ 800042c:	f7ff fea0 	bl	8000170 <Monitor_Alarm_init>
+	 Monitor_Alarm_Driver_init();
+ 8000430:	f7ff fef8 	bl	8000224 <Monitor_Alarm_Driver_init>
+// set state pointer for each block
+	 Pressure_sensor_state=STATE(Pressure_sensor_readflag);
+ 8000434:	4b06      	ldr	r3, [pc, #24]	; (8000450 <setup+0x2c>)
+ 8000436:	4a07      	ldr	r2, [pc, #28]	; (8000454 <setup+0x30>)
+ 8000438:	601a      	str	r2, [r3, #0]
+	 mainAlgorithm_state=STATE(mainAlgorithm_High_pressure_Detect);
+ 800043a:	4b07      	ldr	r3, [pc, #28]	; (8000458 <setup+0x34>)
+ 800043c:	4a07      	ldr	r2, [pc, #28]	; (800045c <setup+0x38>)
+ 800043e:	601a      	str	r2, [r3, #0]
+	 Monitor_Alarm_state=STATE(Monitor_Alarm_AlarmOFF);
+ 8000440:	4b07      	ldr	r3, [pc, #28]	; (8000460 <setup+0x3c>)
+ 8000442:	4a08      	ldr	r2, [pc, #32]	; (8000464 <setup+0x40>)
+ 8000444:	601a      	str	r2, [r3, #0]
+	 Monitor_Alarm_Driver_state= STATE(Monitor_Alarm_Driver_waiting);
+ 8000446:	4b08      	ldr	r3, [pc, #32]	; (8000468 <setup+0x44>)
+ 8000448:	4a08      	ldr	r2, [pc, #32]	; (800046c <setup+0x48>)
+ 800044a:	601a      	str	r2, [r3, #0]
+
+}
+ 800044c:	bf00      	nop
+ 800044e:	bd80      	pop	{r7, pc}
+ 8000450:	20000044 	.word	0x20000044
+ 8000454:	080002e9 	.word	0x080002e9
+ 8000458:	2000004c 	.word	0x2000004c
+ 800045c:	080004d5 	.word	0x080004d5
+ 8000460:	20000034 	.word	0x20000034
+ 8000464:	08000199 	.word	0x08000199
+ 8000468:	20000040 	.word	0x20000040
+ 800046c:	08000269 	.word	0x08000269
+
+08000470 <main>:
+
+int main(void) {
+ 8000470:	b580      	push	{r7, lr}
+ 8000472:	af00      	add	r7, sp, #0
+	GPIO_INITIALIZATION ();
+ 8000474:	f7ff ffae 	bl	80003d4 <GPIO_INITIALIZATION>
+	setup();
+ 8000478:	f7ff ffd4 	bl	8000424 <setup>
+
+ while(1)
+ {
+	 Pressure_sensor_state();
+ 800047c:	4b06      	ldr	r3, [pc, #24]	; (8000498 <main+0x28>)
+ 800047e:	681b      	ldr	r3, [r3, #0]
+ 8000480:	4798      	blx	r3
+	 mainAlgorithm_state();
+ 8000482:	4b06      	ldr	r3, [pc, #24]	; (800049c <main+0x2c>)
+ 8000484:	681b      	ldr	r3, [r3, #0]
+ 8000486:	4798      	blx	r3
+	 Monitor_Alarm_state();
+ 8000488:	4b05      	ldr	r3, [pc, #20]	; (80004a0 <main+0x30>)
+ 800048a:	681b      	ldr	r3, [r3, #0]
+ 800048c:	4798      	blx	r3
+	 Monitor_Alarm_Driver_state();
+ 800048e:	4b05      	ldr	r3, [pc, #20]	; (80004a4 <main+0x34>)
+ 8000490:	681b      	ldr	r3, [r3, #0]
+ 8000492:	4798      	blx	r3
+	 Pressure_sensor_state();
+ 8000494:	e7f2      	b.n	800047c <main+0xc>
+ 8000496:	bf00      	nop
+ 8000498:	20000044 	.word	0x20000044
+ 800049c:	2000004c 	.word	0x2000004c
+ 80004a0:	20000034 	.word	0x20000034
+ 80004a4:	20000040 	.word	0x20000040
+
+080004a8 <Pressure_sensor_set_val>:
+int Pressure_threshold=20;
+
+void (*mainAlgorithm_state) ();
+
+void Pressure_sensor_set_val(int value)
+{
+ 80004a8:	b480      	push	{r7}
+ 80004aa:	b083      	sub	sp, #12
+ 80004ac:	af00      	add	r7, sp, #0
+ 80004ae:	6078      	str	r0, [r7, #4]
+	Pressure_val= value;
+ 80004b0:	4a05      	ldr	r2, [pc, #20]	; (80004c8 <Pressure_sensor_set_val+0x20>)
+ 80004b2:	687b      	ldr	r3, [r7, #4]
+ 80004b4:	6013      	str	r3, [r2, #0]
+	//printf("Pressure_sensor-----------value=%d------------Monitor_Alarm\n",Pressure_val);
+	mainAlgorithm_state=STATE(mainAlgorithm_High_pressure_Detect);
+ 80004b6:	4b05      	ldr	r3, [pc, #20]	; (80004cc <Pressure_sensor_set_val+0x24>)
+ 80004b8:	4a05      	ldr	r2, [pc, #20]	; (80004d0 <Pressure_sensor_set_val+0x28>)
+ 80004ba:	601a      	str	r2, [r3, #0]
+
+}
+ 80004bc:	bf00      	nop
+ 80004be:	370c      	adds	r7, #12
+ 80004c0:	46bd      	mov	sp, r7
+ 80004c2:	bc80      	pop	{r7}
+ 80004c4:	4770      	bx	lr
+ 80004c6:	bf00      	nop
+ 80004c8:	20000030 	.word	0x20000030
+ 80004cc:	2000004c 	.word	0x2000004c
+ 80004d0:	080004d5 	.word	0x080004d5
+
+080004d4 <ST_mainAlgorithm_High_pressure_Detect>:
+STATE_DEFINE(mainAlgorithm_High_pressure_Detect)
+ {
+ 80004d4:	b580      	push	{r7, lr}
+ 80004d6:	af00      	add	r7, sp, #0
+	 mainAlgorithm_state_id= mainAlgorithm_High_pressure_Detect;
+ 80004d8:	4b06      	ldr	r3, [pc, #24]	; (80004f4 <ST_mainAlgorithm_High_pressure_Detect+0x20>)
+ 80004da:	2200      	movs	r2, #0
+ 80004dc:	701a      	strb	r2, [r3, #0]
+	 if(Pressure_val >  Pressure_threshold)
+ 80004de:	4b06      	ldr	r3, [pc, #24]	; (80004f8 <ST_mainAlgorithm_High_pressure_Detect+0x24>)
+ 80004e0:	681a      	ldr	r2, [r3, #0]
+ 80004e2:	4b06      	ldr	r3, [pc, #24]	; (80004fc <ST_mainAlgorithm_High_pressure_Detect+0x28>)
+ 80004e4:	681b      	ldr	r3, [r3, #0]
+ 80004e6:	429a      	cmp	r2, r3
+ 80004e8:	dd01      	ble.n	80004ee <ST_mainAlgorithm_High_pressure_Detect+0x1a>
+		 High_Pressure_Detected();
+ 80004ea:	f7ff fe47 	bl	800017c <High_Pressure_Detected>
+
+ }
+ 80004ee:	bf00      	nop
+ 80004f0:	4618      	mov	r0, r3
+ 80004f2:	bd80      	pop	{r7, pc}
+ 80004f4:	20000049 	.word	0x20000049
+ 80004f8:	20000030 	.word	0x20000030
+ 80004fc:	20000004 	.word	0x20000004
+
+08000500 <Reset_Handler>:
+
+  .section .text.Reset_Handler
+  .weak Reset_Handler
+  .type Reset_Handler, %function
+Reset_Handler:
+  ldr   r0, =_estack
+ 8000500:	480d      	ldr	r0, [pc, #52]	; (8000538 <LoopForever+0x2>)
+  mov   sp, r0          /* set stack pointer */
+ 8000502:	4685      	mov	sp, r0
+/* Call the clock system intitialization function.*/
+  bl  SystemInit
+ 8000504:	f3af 8000 	nop.w
+
+/* Copy the data segment initializers from flash to SRAM */
+  ldr r0, =_sdata
+ 8000508:	480c      	ldr	r0, [pc, #48]	; (800053c <LoopForever+0x6>)
+  ldr r1, =_edata
+ 800050a:	490d      	ldr	r1, [pc, #52]	; (8000540 <LoopForever+0xa>)
+  ldr r2, =_sidata
+ 800050c:	4a0d      	ldr	r2, [pc, #52]	; (8000544 <LoopForever+0xe>)
+  movs r3, #0
+ 800050e:	2300      	movs	r3, #0
+  b LoopCopyDataInit
+ 8000510:	e002      	b.n	8000518 <LoopCopyDataInit>
+
+08000512 <CopyDataInit>:
+
+CopyDataInit:
+  ldr r4, [r2, r3]
+ 8000512:	58d4      	ldr	r4, [r2, r3]
+  str r4, [r0, r3]
+ 8000514:	50c4      	str	r4, [r0, r3]
+  adds r3, r3, #4
+ 8000516:	3304      	adds	r3, #4
+
+08000518 <LoopCopyDataInit>:
+
+LoopCopyDataInit:
+  adds r4, r0, r3
+ 8000518:	18c4      	adds	r4, r0, r3
+  cmp r4, r1
+ 800051a:	428c      	cmp	r4, r1
+  bcc CopyDataInit
+ 800051c:	d3f9      	bcc.n	8000512 <CopyDataInit>
+
+/* Zero fill the bss segment. */
+  ldr r2, =_sbss
+ 800051e:	4a0a      	ldr	r2, [pc, #40]	; (8000548 <LoopForever+0x12>)
+  ldr r4, =_ebss
+ 8000520:	4c0a      	ldr	r4, [pc, #40]	; (800054c <LoopForever+0x16>)
+  movs r3, #0
+ 8000522:	2300      	movs	r3, #0
+  b LoopFillZerobss
+ 8000524:	e001      	b.n	800052a <LoopFillZerobss>
+
+08000526 <FillZerobss>:
+
+FillZerobss:
+  str  r3, [r2]
+ 8000526:	6013      	str	r3, [r2, #0]
+  adds r2, r2, #4
+ 8000528:	3204      	adds	r2, #4
+
+0800052a <LoopFillZerobss>:
+
+LoopFillZerobss:
+  cmp r2, r4
+ 800052a:	42a2      	cmp	r2, r4
+  bcc FillZerobss
+ 800052c:	d3fb      	bcc.n	8000526 <FillZerobss>
+
+/* Call static constructors */
+  bl __libc_init_array
+ 800052e:	f000 f811 	bl	8000554 <__libc_init_array>
+/* Call the application's entry point.*/
+  bl main
+ 8000532:	f7ff ff9d 	bl	8000470 <main>
+
+08000536 <LoopForever>:
+
+LoopForever:
+    b LoopForever
+ 8000536:	e7fe      	b.n	8000536 <LoopForever>
+  ldr   r0, =_estack
+ 8000538:	20002800 	.word	0x20002800
+  ldr r0, =_sdata
+ 800053c:	20000000 	.word	0x20000000
+  ldr r1, =_edata
+ 8000540:	20000008 	.word	0x20000008
+  ldr r2, =_sidata
+ 8000544:	080005bc 	.word	0x080005bc
+  ldr r2, =_sbss
+ 8000548:	20000008 	.word	0x20000008
+  ldr r4, =_ebss
+ 800054c:	20000050 	.word	0x20000050
+
+08000550 <ADC1_2_IRQHandler>:
+ * @retval : None
+*/
+  .section .text.Default_Handler,"ax",%progbits
+Default_Handler:
+Infinite_Loop:
+  b Infinite_Loop
+ 8000550:	e7fe      	b.n	8000550 <ADC1_2_IRQHandler>
+	...
+
+08000554 <__libc_init_array>:
+ 8000554:	b570      	push	{r4, r5, r6, lr}
+ 8000556:	2500      	movs	r5, #0
+ 8000558:	4e0c      	ldr	r6, [pc, #48]	; (800058c <__libc_init_array+0x38>)
+ 800055a:	4c0d      	ldr	r4, [pc, #52]	; (8000590 <__libc_init_array+0x3c>)
+ 800055c:	1ba4      	subs	r4, r4, r6
+ 800055e:	10a4      	asrs	r4, r4, #2
+ 8000560:	42a5      	cmp	r5, r4
+ 8000562:	d109      	bne.n	8000578 <__libc_init_array+0x24>
+ 8000564:	f000 f81a 	bl	800059c <_init>
+ 8000568:	2500      	movs	r5, #0
+ 800056a:	4e0a      	ldr	r6, [pc, #40]	; (8000594 <__libc_init_array+0x40>)
+ 800056c:	4c0a      	ldr	r4, [pc, #40]	; (8000598 <__libc_init_array+0x44>)
+ 800056e:	1ba4      	subs	r4, r4, r6
+ 8000570:	10a4      	asrs	r4, r4, #2
+ 8000572:	42a5      	cmp	r5, r4
+ 8000574:	d105      	bne.n	8000582 <__libc_init_array+0x2e>
+ 8000576:	bd70      	pop	{r4, r5, r6, pc}
+ 8000578:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
+ 800057c:	4798      	blx	r3
+ 800057e:	3501      	adds	r5, #1
+ 8000580:	e7ee      	b.n	8000560 <__libc_init_array+0xc>
+ 8000582:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
+ 8000586:	4798      	blx	r3
+ 8000588:	3501      	adds	r5, #1
+ 800058a:	e7f2      	b.n	8000572 <__libc_init_array+0x1e>
+ 800058c:	080005b4 	.word	0x080005b4
+ 8000590:	080005b4 	.word	0x080005b4
+ 8000594:	080005b4 	.word	0x080005b4
+ 8000598:	080005b8 	.word	0x080005b8
+
+0800059c <_init>:
+ 800059c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 800059e:	bf00      	nop
+ 80005a0:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 80005a2:	bc08      	pop	{r3}
+ 80005a4:	469e      	mov	lr, r3
+ 80005a6:	4770      	bx	lr
+
+080005a8 <_fini>:
+ 80005a8:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 80005aa:	bf00      	nop
+ 80005ac:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 80005ae:	bc08      	pop	{r3}
+ 80005b0:	469e      	mov	lr, r3
+ 80005b2:	4770      	bx	lr

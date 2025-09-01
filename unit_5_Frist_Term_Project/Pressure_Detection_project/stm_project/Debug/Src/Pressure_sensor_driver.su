@@ -1,0 +1,3 @@
+Pressure_sensor_driver.c:19:6:Pressure_sensor_init	4	static
+Pressure_sensor_driver.c:23:1:ST_Pressure_sensor_readflag	8	static
+Pressure_sensor_driver.c:35:1:ST_Pressure_sensor_waiting	8	static

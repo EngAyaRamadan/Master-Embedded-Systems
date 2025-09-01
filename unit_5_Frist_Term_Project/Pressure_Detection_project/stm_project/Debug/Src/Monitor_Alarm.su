@@ -1,0 +1,5 @@
+Monitor_Alarm.c:19:7:Monitor_Alarm_init	4	static
+Monitor_Alarm.c:23:7:High_Pressure_Detected	4	static
+Monitor_Alarm.c:28:2:ST_Monitor_Alarm_AlarmOFF	8	static
+Monitor_Alarm.c:33:2:ST_Monitor_Alarm_AlarmON	8	static
+Monitor_Alarm.c:41:2:ST_Monitor_Alarm_waiting	8	static

@@ -1,0 +1,2 @@
+mainAlgorithm.c:19:6:Pressure_sensor_set_val	16	static
+mainAlgorithm.c:26:1:ST_mainAlgorithm_High_pressure_Detect	8	static
